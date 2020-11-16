@@ -42,7 +42,7 @@ To truly convert a record, we need to account for all **related lists**. The com
 #### Related Contacts
 In this example, "Household" and "Business" are both lookup fields on the Contact module. You will need to change this based on how the your modules are set up in relation to Contacts. A `for loop` is used to iterate through every Contact (if there are more than one).
 ```javascript
-allContacts = zoho.crm.getRelatedRecords("Related_Contacts", oldModule, recordId); //Change this to Contacts
+allContacts = zoho.crm.getRelatedRecords("Contacts", oldModule, recordId);
 for each c in allContacts
 {
 	delete = zoho.crm.updateRecord("Contacts", c.get("id"), {"Household" : ""});
