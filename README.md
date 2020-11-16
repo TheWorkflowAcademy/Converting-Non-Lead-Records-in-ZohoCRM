@@ -129,7 +129,6 @@ if (allPastAct.size() > 0)
 ### Download & Upload Attachments
 To leave no stones unturned, all attachment(s) on the old record will also be migrated by downloading the attachment(s), and uploading to the new record.
 ```javascript
-//Download & Upload Attachments
 attachment = invokeurl
 [
 	url: "https://www.zohoapis.com/crm/v2/"+oldModule+"/"+recordId+"/Attachments"
