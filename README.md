@@ -2,10 +2,10 @@
 A Deluge script that replicates the conversion of a record across different modules in Zoho CRM by copying info to a new record in a different module and deleting the old record.
 
 ## Core Idea
-Zoho CRM has a default conversion button that lets users convert Leads to Contacts on a click of a button. This functionality however, is limited to only the 2 aforementioned modules. This script aims to replicate the conversion button should you need to convert records across modules that aren't Leads to Contacts. This is done by copying all the necessary fields and related lists from the original module to the new, then deleting the old record.
+Zoho CRM allows users to convert records from Leads to Contacts on a click of a button, however it is only limited to the said module. This script aims to replicate the conversion button should you need to convert records across modules that aren't Leads to Contacts. This is done by copying all the necessary fields and related lists from the original module to the new, then deleting the old record.
 
 ## Example Case
-You are running an insurance business with two different types of client accounts, "Households" and "Businesses". You manage these 2 different types of accounts in CRM by having 2 modules, one for each type. At any point of time, your staff needs to convert "Household" records to "Businesses" and vice versa.
+Your insurance business has two different types of client accounts, "Households" and "Businesses". Due to unique requirements, the 2 different types of accounts are managed in CRM with two modules, one for each type. At any point of time, your staff needs to convert "Household" records to "Businesses" and vice versa. In this demonstration, we will show you how to convert a records from Households to Businesses. For reverse conversion, the script will have to be modified accordingly.
 
 ## Configuration
 * The two inter-related conversion modules should be set up with the relevant fields mapped.
@@ -37,10 +37,10 @@ newRecordId = newRecord.get("id");
 info newRecordId;
 ```
 ### Get all necessary Related Lists and Modify it to the New Record
-To truly convert a record, we need to account for all **related lists**. The common related lists in records are Contacts, Deals, Notes and Activities (Tasks, Events, Calls). This list may differ/be longer on a case-to-case basis depending on the nature of your modules, but for the purpose of this demonstration, we will focus on the four mentioend.
+The common related lists in records are Contacts, Deals, Notes and Activities (Tasks, Events, Calls). This list may differ/be longer on a case-to-case basis depending on the nature of your modules, but for the purpose of this example, we will focus on the four.
 
-#### Related Contacts
-In this example, "Household" and "Business" are both lookup fields on the Contact module. You will need to change this based on how the your modules are set up in relation to Contacts. A `for loop` is used to iterate through every Contact (if there are more than one).
+#### 1. Related Contacts
+In this example, "Household" and "Business" are both lookup fields on the Contact module. A `for loop` is used to iterate through every Contact.
 ```javascript
 allContacts = zoho.crm.getRelatedRecords("Contacts", oldModule, recordId);
 for each c in allContacts
@@ -51,9 +51,10 @@ for each c in allContacts
 	info update;
 }
 ```
+*Note: Modify the script above accordingly based on your module set up*
 
-#### Related Deals
-Similar to above, you will need to change this based on how the your modules are set up in relation to Deals. A `for loop` is used to iterate through every Deal (if there are more than one).
+#### 2. Related Deals
+The same is done for all related deals.
 ```javascript
 allDeals = zoho.crm.getRelatedRecords("Deals", oldModule, recordId);
 if (allDeals.size() > 0)
@@ -67,9 +68,10 @@ if (allDeals.size() > 0)
   }
 }
 ```
+*Note: Modify the script above accordingly based on your module set up*
 
-#### Related Notes
-The Notes related list has a universal structure so changes to the script are not needed. Here, we need to copy the **Note Title** and **Note Content** from the old record to the new. A `for loop` is used to iterate through every note. It will not be necessary to delete the note(s) in the old record as they will be deleted later along with the record deletion.
+#### 3. Related Notes
+Related Notes are migrated by copying both the **Note Title** and **Note Content** from the old record, and creating in the new. A `for loop` is used to iterate through every note.
 
 ```javascript
 allNotes = zoho.crm.getRelatedRecords("Notes", oldModule, recordId);
@@ -82,8 +84,9 @@ if (allNotes.size() > 0)
 	  info create;
 }
 ```
+*Note: The Notes related list has a universal structure so changes to the script are not needed.
 
-#### Open Activities
+#### 4. Open Activities
 Get all Activities on the old record, iterate through a `for loop`, then modify the Activity by linking it to the new record. 
 * `"$se_module"` determines the **module** the activity should lookup to
 * `What_Id` links the activity to the specific **record** lookup
@@ -107,7 +110,7 @@ for each a in allAct
 ```
 
 #### Closed Activities
-When activites related to records are closed, they are moved to a different related list in the system called "Activities_History". For traceability, it's a good practice that closed activites are also migrated to the new record.
+When activites related to records are closed, they are moved to a different related list in the system called "Activities_History". For traceability, it's in good practice that closed activites are also migrated to the new record.
 
 ```javascript
 allPastAct = zoho.crm.getRelatedRecords("Activities_History", oldModule, recordId);
@@ -127,7 +130,7 @@ if (allPastAct.size() > 0)
 ```
 
 ### Download & Upload Attachments
-To leave no stones unturned, all attachment(s) on the old record will also be migrated by downloading the attachment(s), and uploading to the new record.
+To leave no stones unturned, all attachment(s) on the old record are also migrated by downloading the attachment(s), and uploading to the new record.
 ```javascript
 attachment = invokeurl
 [
@@ -151,7 +154,6 @@ if (attachment.get("data").size() > 0)
 	}
 }
 ```
-
 ### Delete Old Record
 When the transition is completed, delete the old record from the original module.
 ```javascript
