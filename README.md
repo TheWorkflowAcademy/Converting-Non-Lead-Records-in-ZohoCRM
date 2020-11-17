@@ -5,7 +5,7 @@ A Deluge script that replicates the conversion of a record across different modu
 Zoho CRM allows users to convert records from Leads to Contacts on a click of a button, however it is only limited to the said module. This script aims to replicate the conversion button should you need to convert records across modules that aren't Leads to Contacts. This is done by copying all the necessary fields and related lists from the original module to the new, then deleting the old record.
 
 ## Example Case
-Your insurance business has two different types of client accounts, "Households" and "Businesses". Due to unique requirements, the 2 different types of accounts are managed in CRM with two modules, one for each type. At any point of time, your staff needs to convert "Household" records to "Businesses" and vice versa. In this demonstration, we will show you how to convert a records from Households to Businesses. For reverse conversion, the script will have to be modified accordingly.
+Your insurance business has two different types of client accounts, "Households" and "Businesses". Due to unique requirements, they are managed in CRM with two modules, one for each type. At any point of time, your staff needs to convert "Household" records to "Businesses" and vice versa. In this demonstration, we will show you how to convert a records from Households to Businesses. For reverse conversion, the script will have to be modified accordingly.
 
 ## Configuration
 * The two inter-related conversion modules should be set up with the relevant fields mapped.
