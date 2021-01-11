@@ -75,13 +75,14 @@ Related Notes are migrated by copying both the **Note Title** and **Note Content
 
 ```javascript
 allNotes = zoho.crm.getRelatedRecords("Notes", oldModule, recordId);
-if (allNotes.size() > 0)
+if(allNotes.size() > 0)
 {
-  for each n in allNotes
-  {
-	  notesMap = {"Parent_Id":newRecordId,"Note_Title":n.get("Note_Title"),"Note_Content":n.get("Note_Content"),"$se_module": newModule};
-	  create = zoho.crm.createRecord("Notes",notesMap);
-	  info create;
+	for each  n in allNotes
+	{
+		notesMap = {"Parent_Id":newRecordId,"Note_Title":n.get("Note_Title"),"Note_Content":n.get("Note_Content"),"$se_module":newModule};
+		create = zoho.crm.createRecord("Notes",notesMap);
+		info create;
+	}
 }
 ```
 *Note: The Notes related list has a universal structure so changes to the script are not needed.
