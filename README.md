@@ -262,7 +262,7 @@ attachment = invokeurl
 [
 	url :"https://www.zohoapis.com/crm/v2/" + oldModule + "/" + recordId + "/Attachments"
 	type :GET
-	connection:"zohocrm"
+	connection:"insert_your_crm_connection_here"
 ];
 if(attachment.get("data").size() > 0)
 {
@@ -272,7 +272,7 @@ if(attachment.get("data").size() > 0)
 		[
 			url :"https://www.zohoapis.com/crm/v2/" + oldModule + "/" + recordId + "/Attachments/" + atm.get("id")
 			type :GET
-			connection:"zohocrm"
+			connection:"insert_your_crm_connection_here"
 		];
 		upload = zoho.crm.attachFile(newModule,newRecordId,download);
 		info upload;
@@ -289,7 +289,7 @@ if(allDeals.size() > 0)
 		[
 			url :"https://www.zohoapis.com/crm/v2/Deals?ids=" + d.get("id") + "&wf_trigger=true"
 			type :DELETE
-			connection:"zohocrm"
+			connection:"insert_your_crm_connection_here"
 		];
 		info delete;
 	}
@@ -303,7 +303,7 @@ if(accountid != "none")
 	[
 		url :"https://www.zohoapis.com/crm/v2/Accounts?ids=" + accountid + "&wf_trigger=true"
 		type :DELETE
-		connection:"zohocrm"
+		connection:"insert_your_crm_connection_here"
 	];
 	info delete;
 }
@@ -313,7 +313,7 @@ delete = invokeurl
 [
 	url :"https://www.zohoapis.com/crm/v2/" + oldModule + "?ids=" + recordId + "&wf_trigger=true"
 	type :DELETE
-	connection:"zohocrm"
+	connection:"insert_your_crm_connection_here"
 ];
 info delete;
 
